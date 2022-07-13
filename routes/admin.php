@@ -36,5 +36,29 @@ Route::middleware([])
 Route::middleware(['auth:admin'])
     ->namespace('App\Http\Controllers\Admin')
     ->group(function () {
+        // 不需要权限校验的接口
         Route::get('me', 'AdminController@me');
+
+
+        // 需要权限校验的接口
+        Route::middleware(['permission'])
+            ->group(function () {
+                // 角色处理
+                Route::get('roles', 'RoleController@index');
+                Route::post('roles', 'RoleController@store');
+                Route::put('roles/{id}', 'RoleController@update');
+                Route::get('roles/{id}', 'RoleController@show');
+
+                // 权限
+                Route::get('permissions', 'PermissionController@index');
+                Route::post('permissions', 'PermissionController@store');
+                Route::put('permissions/{id}', 'PermissionController@update');
+                Route::get('permissions/{id}', 'PermissionController@show');
+
+                Route::get('menus', 'MenuController@index');
+                Route::post('menus', 'MenuController@store');
+                Route::put('menus/{id}', 'MenuController@update');
+                Route::get('user-menus', 'MenuController@userIndex');
+            });
     });
+
