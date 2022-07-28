@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Role;
+namespace App\Http\Requests\Admin\Menu;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,17 +25,17 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:60',
-            'menus' => 'required|array',
-            'menus.*.id' => 'required|integer|exists:menu,id',
+            'permissions' => 'nullable|array',
+            'permissions.*.id' => 'nullable|integer|exists:permission,id',
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => '角色名',
-            'menus' => '菜单',
-            'menus.*.id' => '菜单项',
+            'name' => '菜单名',
+            'permissions' => '路由',
+            'permissions.*.id' => '路由项',
         ];
     }
 }

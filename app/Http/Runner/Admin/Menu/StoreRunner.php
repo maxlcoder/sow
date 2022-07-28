@@ -5,12 +5,23 @@ namespace App\Http\Runner\Admin\Menu;
 use App\Http\Runner\Runner;
 use App\Models\MenuModel;
 use App\Models\MenuPermissionModel;
+use App\Repository\Contract\MenuContract;
 use Illuminate\Http\Request;
 
 class StoreRunner implements Runner
 {
-    public function run(Request $request)
+    private $menuRepository;
+
+    public function __construct(MenuContract $menuRepository)
     {
+        $this->menuRepository = $menuRepository;
+    }
+
+    public function  run(Request $request)
+    {
+        if ($this->menuRepository->isNameExist($request->get('name'))) {
+            return response_error('菜单名重复');
+        }
         $menu = MenuModel::query()->create([
             'name' => $request->get('name'),
             'parent_id' => $request->get('parent_id', 0),

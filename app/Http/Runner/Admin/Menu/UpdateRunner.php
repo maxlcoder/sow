@@ -38,8 +38,6 @@ class UpdateRunner implements Runner
                     ->where('menu_id', $menu->id)
                     ->whereNotIn('permission_id', Arr::pluck($request->get('permissions'), 'id'))
                     ->delete();
-            } else {
-
             }
         }
         return ['id' => $menu->id];

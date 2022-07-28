@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('menu', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('parent_id')->default(0);
-            $table->string('name', 100)->default('');
-            $table->string('front_path', 100)->default('');
-            $table->timestamps();
+        Schema::table('menu', function (Blueprint $table) {
+            $table->string('remark', 200)->default('')->comment('备注')->after('front_path');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu');
+        Schema::table('menu', function (Blueprint $table) {
+            $table->dropColumn('remark');
+        });
     }
 };

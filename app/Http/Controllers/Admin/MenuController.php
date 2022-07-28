@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\Menu\StoreRequest;
 use App\Http\Runner\Admin\Menu\IndexRunner;
 use App\Http\Runner\Admin\Menu\StoreRunner;
 use App\Http\Runner\Admin\Menu\UpdateRunner;
@@ -21,7 +22,7 @@ class MenuController extends AdminBaseController
         return $this->success($userIndexRunner->run($request));
     }
 
-    public function store(Request $request, StoreRunner $storeRunner)
+    public function store(StoreRequest $request, StoreRunner $storeRunner)
     {
         return $this->success($storeRunner->run($request));
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Runner\Admin\Admin\LoginRunner;
 use App\Http\Runner\Admin\Admin\MeRunner;
-use App\Http\Runner\Admin\Example\StoreRunner;
+use App\Http\Runner\Admin\Admin\StoreRunner;
 use Illuminate\Http\Request;
 
 class AdminController extends AdminBaseController
