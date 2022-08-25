@@ -6,6 +6,7 @@ use App\Http\Runner\Runner;
 use App\Repository\Contract\ExampleContract;
 use App\Repository\ExampleRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 
 /**
@@ -15,10 +16,7 @@ use Illuminate\Http\Request;
  */
 class IndexRunner implements Runner
 {
-
-    private ExampleContract $repository;
-
-    public function __construct(ExampleRepository $repository)
+    public function __construct(ExampleContract $repository)
     {
         $this->repository = $repository;
     }
@@ -26,6 +24,15 @@ class IndexRunner implements Runner
     // 业务逻辑执行
     public function run(Request $request)
     {
+
+        $res = $this->repository->earth();
+        if (!empty($res)) {
+            return $res;
+        }
+
+        return ['test' => 'data'];
+
+
         // 二次参数校验
 
 

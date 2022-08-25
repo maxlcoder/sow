@@ -51,6 +51,7 @@ class MenuTest extends BaseTestCase
     {
         // 生成持久化管理员
         $admin = AdminModel::factory()->create();
+
         // TODO 设置管理员
         $request = $this->header()->adminLogin($admin);
 
