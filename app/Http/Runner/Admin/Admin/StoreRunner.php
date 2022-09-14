@@ -3,16 +3,26 @@
 namespace App\Http\Runner\Admin\Admin;
 
 use App\Http\Runner\Runner;
-use Illuminate\Http\Request;
+use App\Models\AdminModel;
+use Illuminate\Support\Facades\Hash;
 
 class StoreRunner implements Runner
 {
-
-    // 业务逻辑执行
-    public function run(Request $request)
+    public function run($request)
     {
-        // 通过 jwt 获取用户信息
-        $admin = auth('admin')->user();
-        return $admin;
+        $params = $request->safe()->only([
+            'name',
+            'real_name',
+            'avatar',
+            'email',
+            'mobile',
+        ]);
+        $password = Hash::make($request->input('password'));
+        $params['password'] = $password;
+        $params['role_id'] = $request->input('role')['id'];
+
+        $admin = AdminModel::query()
+            ->create($params);
+        return ['id' => $admin->id];
     }
 }

@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('parent_id')->default(0);
             $table->string('name', 100)->default('');
-            $table->string('front_path', 100)->default('');
+            $table->string('icon', 100)->default('');
+            $table->string('front_path', 100)->default('')->comment('前台路径');
+            $table->string('type', 30)->default('')->comment('类别 LIST/BUTTON');
+            $table->string('remark', 200)->default('')->comment('备注');
             $table->timestamps();
         });
     }

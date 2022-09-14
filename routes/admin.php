@@ -14,17 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-Route::middleware([])
-    ->namespace('App\Http\Controllers\Admin')
-    ->group(function () {
-        Route::get('articles', 'ExampleController@index');
-        Route::post('articles', 'ExampleController@store');
-    });
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 Route::middleware([])
     ->namespace('App\Http\Controllers\Admin')
@@ -36,8 +28,12 @@ Route::middleware([])
 Route::middleware(['auth:admin'])
     ->namespace('App\Http\Controllers\Admin')
     ->group(function () {
+
         // 不需要权限校验的接口
-        Route::get('me', 'AdminController@me');
+        Route::get('me', 'AdminController@me')->name('个人信息');
+        Route::put('logout', 'AdminController@logout')->name('退出登录');
+        Route::put('refresh', 'AdminController@refresh')->name('刷新token');
+        Route::put('me', 'AdminController@updateMe')->name('修改个人信息');
 
 
         // 需要权限校验的接口
@@ -55,6 +51,7 @@ Route::middleware(['auth:admin'])
                 Route::put('permissions/{id}', 'PermissionController@update');
                 Route::get('permissions/{id}', 'PermissionController@show');
 
+                // 菜单
                 Route::get('menus', 'MenuController@index');
                 Route::post('menus', 'MenuController@store');
                 Route::put('menus/{id}', 'MenuController@update');

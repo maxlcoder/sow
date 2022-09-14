@@ -5,6 +5,8 @@ namespace App\Http\Runner\Admin\Admin;
 use App\Http\Runner\Runner;
 use App\Models\AdminModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 /**
@@ -15,11 +17,16 @@ use Illuminate\Http\Request;
 class LoginRunner implements Runner
 {
     // 业务逻辑执行
-    public function run(Request $request)
+    public function run($request)
     {
-        // 假设登录, 注意使用 auth('admin') 表示后台用户登录
-        $admin = AdminModel::query()->first();
-        $token = auth('admin')->login($admin);
+        $token = Auth::guard('admin')->attempt([
+            'name' => $request->input('name'),
+            'password' => $request->input('password'),
+        ]);
+        if (!$token) {
+            return response_error('用户名或密码错误');
+        }
+        $admin = auth('admin')->user();
         $admin->token = $token;
         return $admin;
     }
