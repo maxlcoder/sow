@@ -3,6 +3,7 @@
 namespace App\Http\Runner\Admin\Admin;
 
 use App\Http\Runner\Runner;
+use App\Lib\Util\RsaUtil;
 use App\Models\AdminModel;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,8 +18,8 @@ class StoreRunner implements Runner
             'email',
             'mobile',
         ]);
-        $password = Hash::make($request->input('password'));
-        $params['password'] = $password;
+        $password = RsaUtil::decrypt($request->input('password'));
+        $params['password'] = Hash::make($password);
         $params['role_id'] = $request->input('role')['id'];
 
         $admin = AdminModel::query()

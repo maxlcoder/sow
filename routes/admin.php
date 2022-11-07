@@ -22,6 +22,7 @@ Route::middleware([])
     ->namespace('App\Http\Controllers\Admin')
     ->group(function () {
         Route::post('login', 'AdminController@login');
+        Route::get('public-key', 'CommonController@publicKey');
     });
 
 // 后台用户登录鉴权
