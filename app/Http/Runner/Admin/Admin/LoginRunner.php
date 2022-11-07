@@ -3,10 +3,7 @@
 namespace App\Http\Runner\Admin\Admin;
 
 use App\Http\Runner\Runner;
-use App\Models\AdminModel;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 
 /**
@@ -28,6 +25,7 @@ class LoginRunner implements Runner
         }
         $admin = auth('admin')->user();
         $admin->token = $token;
+        $admin->expires_in = auth('admin')->factory()->getTTL() * 60;
         return $admin;
     }
 }
